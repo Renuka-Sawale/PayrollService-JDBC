@@ -5,7 +5,9 @@ import java.util.Enumeration;
 
 public class DBConnection {
     public static void main(String[] args) {
-        String jdbcURL = "jdbc:mysql://localhost:3306/?user=root";
+        System.out.println("Welcome to jdbc");
+    }
+        /*String jdbcURL = "jdbc:mysql://localhost:3306/?user=root";
         String userName = "root";
         Connection conn;
         try {
@@ -29,5 +31,5 @@ public class DBConnection {
             Driver driverClass = (Driver) driverlist.nextElement();
             System.out.println(" "+driverClass.getClass().getName());
         }
-    }
+    }*/
 }
