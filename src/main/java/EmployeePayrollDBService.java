@@ -28,19 +28,6 @@ public class EmployeePayrollDBService {
         return connection;
     }
 
-    public List<EmployeePayrollData> readEmployeePayrollData() {
-        String sql = "select * from employee_payroll; ";
-        List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-        try(Connection connection = this.getConnection()){
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            employeePayrollList = this.getEmployeePayrollServiceData(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return employeePayrollList;
-    }
-
     private List<EmployeePayrollData> getEmployeePayrollServiceData(ResultSet resultSet) {
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         try {
@@ -95,6 +82,29 @@ public class EmployeePayrollDBService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<EmployeePayrollData> readEmployeePayrollData() {
+        String sql = "select * from employee_payroll; ";
+        return this.getEmployeePayrollDataUsingDB(sql);
+    }
+
+    public List<EmployeePayrollData> readPayrollForDateRange(LocalDate startDate, LocalDate endDate) {
+        String query = String.format("select * from employee_payroll where start between '%s' and '%s' ",
+                Date.valueOf(startDate), Date.valueOf(endDate));
+        return this.getEmployeePayrollDataUsingDB(query);
+    }
+
+    private List<EmployeePayrollData> getEmployeePayrollDataUsingDB(String query) {
+        List<EmployeePayrollData> employeePayrolllist = new ArrayList<>();
+        try(Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            employeePayrolllist = this.getEmployeePayrollServiceData(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeePayrolllist;
     }
 }
 
