@@ -13,11 +13,12 @@ public class EmployeePayrollServiceTest {
     }
 
     @Test
-    public void givenNewSalaryForEmployee_whenUpdated_shouldSyncWithDB() {
-            EmployeePayrollDBService employeePayrollService = new EmployeePayrollDBService();
-            List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollData();
-            int result = employeePayrollService.updateEmployeeSalary("Terisa", 3000000.00);
-            System.out.println(employeePayrollData);
-            Assertions.assertEquals(1, result);
+    public void givenNewSalaryForEmployee_whenUpdated_shouldSyncWithDB_PrepareStatement() {
+        EmployeePayrollDBService.getInstance();
+        List<EmployeePayrollData> employeePayrollData = EmployeePayrollDBService.getInstance().readEmployeePayrollData();
+        EmployeePayrollDBService.getInstance().updateEmployeeSalary("Terisa", 3000000.00);
+        boolean result =  EmployeePayrollDBService.getInstance().checkEmployeePayrollSynWithDB("Terisa");
+        System.out.println(employeePayrollData);
+        Assertions.assertTrue(result);
     }
 }
