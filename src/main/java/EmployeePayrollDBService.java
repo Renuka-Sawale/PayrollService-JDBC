@@ -35,6 +35,17 @@ public class EmployeePayrollDBService {
         }
         return employeePayrollList;
     }
+
+    public int updateEmployeeSalary(String name, double salary) {
+        String sql = String.format("Update employee_payroll set salary = %.2f where name = '%s';", salary, name);
+        try(Connection connection = this.getConnection()) {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
 
 
